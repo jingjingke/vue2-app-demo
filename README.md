@@ -102,3 +102,7 @@
 ##大致页面流程图
 ![](http://www.jingjingke.com/uploads/allimg/170213/processon.png)
 画的不好请勿拍~
+
+##页面部分截图
+![](http://www.jingjingke.com/uploads/allimg/170213/vue-pic1.gif)
+![](http://www.jingjingke.com/uploads/allimg/170213/vue-pic2.gif)
