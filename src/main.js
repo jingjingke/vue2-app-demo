@@ -3,8 +3,12 @@ import Vue from 'vue';
 import VueRouter from "vue-router";
 import VueResource from "vue-resource";
 
-//Vue使用router插件
+import store from './store';
+
+//Vue使用router、vuex插件
 Vue.use(VueRouter);
+
+
 
 //引入home根
 import home from './components/home';
@@ -12,8 +16,10 @@ import home from './components/home';
 import routes from './config/routes';
 //创建路由
 var router = new VueRouter({
-	mode: 'history',
-	base: __dirname,
+//	mode: 'history',
+//	base: __dirname,
+	hashbang: false,
+	history:true,
 	routes:routes,
 	scrollBehavior:function(to,from,savedPosition){
 		return { "x":0 , "y": 0 }
@@ -21,6 +27,7 @@ var router = new VueRouter({
 })
 //创建实例
 var app = new Vue({
+	store,
 	router,
 	render: h => h(home)
 }).$mount('#app')

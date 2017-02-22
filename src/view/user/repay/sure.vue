@@ -79,17 +79,13 @@
 		    	//ajax完成
 			}
 		},
-		mounted:function(){
-			//发送ajax--获取信息
-			this.sendAjax();
-		},
 		activated:function(){
 			//获取页面参数
 			var pOrder = this.$route.params.order,
 				pId = this.$route.params.id,
 				pTotal = this.$route.params.total;
-			//判断缓存中的订单Id等是否一致,如果有任意不一致则重新发ajax
-			if(pOrder !== this.order || pId !== this.id || pTotal !== this.total )	this.sendAjax();
+			//这个页面为了保持准确性，每次都去ajax一次
+			this.sendAjax();
 		}
 	}
 </script>

@@ -8,7 +8,7 @@
 	export default{
 		data(){
 			return {
-				num:3,		//倒计时秒数,
+				num:0,		//倒计时秒数,初始化
 				timeOut:{}	//定时器挂到VUE上
 			}
 		},
@@ -18,7 +18,8 @@
 				return "页面不存在,"+this.num+"S后回到首页";
 			}
 		},
-		mounted:function(){
+		activated:function(){
+			this.num = 3;
 			var that = this;
 			//设置倒计时定时器
 			that.timeOut = setInterval(function(){
@@ -29,7 +30,7 @@
 				}
 			},1000)
 		},
-		beforeDestroy:function(){
+		deactivated:function(){
 			clearInterval(this.timeOut);	//页面销毁时同时清除定时器
 		}
 	}

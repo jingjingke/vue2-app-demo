@@ -76,8 +76,9 @@
 	    	this.sendAjax(this.currentPage);
 	    },
 	    activated:function(){
-	    	//如果缓存Id与当前ID不一致则需要重置相关信息并且重新获取数据
-	    	if(this.appInfo.appId !== null && this.appId !=='' && this.appInfo.appId !== this.appId){
+	    	//若当前appId(keep-alive)与全局appId不一致 或者 store状态提示需要更新
+	    	var isupload = this.$store.state.userPages.borrowList4;
+	    	if(this.appInfo.appId !== this.appId || isupload === true){
 	    		//重置相关信息
 	    		this.hasBorrow = false;
 	    		this.noBorrow = false;
@@ -88,15 +89,13 @@
 	    		this.showDelay = true;
 	    		//重发ajax
 	    		this.sendAjax(this.currentPage);
+	    		//还原store中记录的状态
+	    		this.$store.commit('uploadBorrow',{val:false,num:4});
 	    	}
 	    	//监听滚动条操作
 	    	window.addEventListener('scroll',this.handleScroll);
 	    },
 	    deactivated:function(){
-	    	//解除监听滚动条操作
-	    	window.removeEventListener('scroll',this.handleScroll);
-	    },
-	    beforeDestroy:function(){
 	    	//解除监听滚动条操作
 	    	window.removeEventListener('scroll',this.handleScroll);
 	    }

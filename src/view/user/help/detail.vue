@@ -19,7 +19,7 @@
 	            helpDetail:{}
 	        }
 	    },
-	    mounted:function(){
+	    activated:function(){
 	    	//页面加载时获取列表索引号-[索引号为传递过来的参数]
 			var pIdx = this.$route.params.index;
 			//数据提取

@@ -59,8 +59,8 @@ var methods={
 			appId:id
 		}
 		//兼容刷新浏览器时会丢失私钥和appId
-		localStorage.setItem('appId',id);
-	    localStorage.setItem('secret',key);
+//		localStorage.setItem('appId',id);
+//	    localStorage.setItem('secret',key);
 	},
 	loseSecret:function(id,key){
 		//主要用于退出登录时，替换现有私钥与appId
@@ -71,8 +71,8 @@ var methods={
 	},
 	//全局记录私钥和appId
 	appInfo:{
-		secret:localStorage.getItem('secret'),
-		appId:localStorage.getItem('appId')
+//		secret:localStorage.getItem('secret'),
+//		appId:localStorage.getItem('appId')
 	},
 	//全局校验输入字符串(例:用户名、密码、意见反馈等)
 	checkRE:{

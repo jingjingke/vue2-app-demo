@@ -45,7 +45,7 @@
 	    watch:{
 	    	"textArea":"changeText"
 	    },
-	    mounted:function(){
+	    activated:function(){
 	    	this.textArea = this.defaultVal;
 	    }
 	}

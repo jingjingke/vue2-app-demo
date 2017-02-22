@@ -52,6 +52,7 @@
 	        	knowShow:false,
 	        	showDelay:true,	//开关--显示等待转圈
 	        	id:0,			//用于区分缓存Id
+	        	appId:''		//记录appId
 	        }
 	    },
 	    methods :{
@@ -73,6 +74,8 @@
 	        	else return false;
 	        },
 	        sendAjax(){
+	        	//记录当前缓存的appId用于后面区分
+	    		this.appId = this.appInfo.appId;
 	        	//获取传递过来的id
 	        	this.id = this.$route.params.id;
 	        	//发送ajax
@@ -83,7 +86,8 @@
 		    		//如果数据获取成功则拉取数据，将等待图关闭，并缓存数据(用于更多)
 		    		this.data = rs.data;
 					this.showDelay = false;
-					localStorage.setItem('borrowDetail'+this.id,JSON.stringify(this.data))
+					//vuex-store中存json数据
+					this.$store.commit('addBorrow',{id:this.id,val:this.data});
 		    	})
 		    	//ajax完成
 	        }
@@ -109,22 +113,16 @@
 	    		}
 	    	}
 	    },
-	    mounted:function(){
-	    	//调用发送ajax
-	    	this.sendAjax();
-	    },
 	    activated:function(){
-	    	//判断被缓存的参数id与当前接收的参数id是否一致
-	    	if(this.id !== this.$route.params.id){
-	    		//获取localStorage数据
-	    		var localData = localStorage.getItem('borrowDetail'+this.$route.params.id);
-	    		//判断localStorage中是否有数据
-	    		if(localData === null){
-	    			this.showDelay = true;
-	    			this.sendAjax();
-	    		}else{
-	    			this.data = JSON.parse(localData);
-	    		}
+	    	//获取store中存的指定id的数据
+	    	var storeData = this.$store.state.borrowDetail[this.$route.params.id];
+	    	//若当前appId(keep-alive)与全局appId不一致 或者 store中未保存数据则需要更新数据
+	    	if(this.appInfo.appId !== this.appId || storeData === undefined){
+	    		this.showDelay = true;
+	    		this.sendAjax();
+	    	}else if(storeData !== undefined){
+	    		//若store中存有数据
+	    		this.data = storeData;
 	    	}
 	    }
 	}

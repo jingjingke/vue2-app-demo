@@ -53,6 +53,9 @@
 │   ├── bankId.json               // 银行Id对应样式式和名称
 │   └── helpDatas.json            // 帮助中心标题内容
 │
+├── store                         // vuex相关
+│   └── index.js                  // vuex设置
+│
 ├── views                         // 业务页面
 │   ├── other                     // 其它
 │   │   ├── error.vue             // 404

@@ -67,6 +67,7 @@
 						}
 						//执行完for后，将第二步中temp接收到的数据根据时间排序后给datas
 						this.datas=this.jsonSort(this.temp,'planTime');
+						this.$store.commit('uploadRepay',{flag:false,data:this.datas});
 					}
 				})
 				//ajax完成
@@ -85,8 +86,13 @@
 	    			for(var i =0; i < rs.data.length; i++){
 						//先用temp接收数据[只接收第一个不是 已归还(status:1) 的订单数据]
 						if(rs.data[i].status !== 1){
-							if(this.paramId === undefined)	this.temp.push(rs.data[i]);
-							else							this.datas.push(rs.data[i]);
+							//如果有传参的话则先将数据放到temp临时记录。否则直接赋值给data
+							if(this.paramId === undefined){
+								this.temp.push(rs.data[i]);
+							}else{
+								this.datas.push(rs.data[i]);
+								this.$store.commit('addRepay',{id:this.id,val:this.datas});
+							}
 							break;
 						}
 					}
@@ -97,26 +103,41 @@
 	    		//这个页面即可以接受一个id参数（从借款过来时），也可以不接受参数（列表汇总页面）
 				//（1）当接受不到id参数时，则去查所有待还的订单ID后查相应的分期待还（结果若干）
 				//（2）否则当接受到参数，则忽略查所有待还订单，直接查最近的一期分期待还（结果只一个）
+				this.showDelay = true;
+	    		this.hasRecord = false;
+				this.noRecord = false;
 				this.datas = [];
 				this.temp = [];
 				this.appId = this.appInfo.appId;
 				this.paramId = this.$route.params.id;
-	    		if(this.paramId === undefined)	this.sendAjax();
-				else							this.sendIdAjax(this.paramId);
+	    		if(this.paramId === undefined){
+	    			this.sendAjax();
+	    		}else{
+	    			this.sendIdAjax(this.paramId);
+	    		}
 	    	}
-	    },
-	    mounted:function(){
-			//过一遍页面流程
-			this.pageLogic();
 	    },
 	    activated:function(){
 	    	//当页面未收到参数时
 	    	if(this.$route.params.id === undefined){
-	    		//判断缓存appId与当前全局appId是否一致
-	    		if(this.appId !== this.appInfo.appId)	this.pageLogic();
+	    		//获取store中状态以及保存的json(全部还款列表)
+	    		var repayListStatus = this.$store.state.userPages.repayList,
+	    			storeRepayList = this.$store.state.repayList;
+	    		//判断缓存appId与当前全局appId是否一致或者vuex状态提示需要更新或者vuex记录没有值（最后一项表示的其实是刚进入页面时）
+	    		if(this.appId !== this.appInfo.appId || repayListStatus === true || storeRepayList === ''){
+	    			this.pageLogic();
+	    		}else if(storeRepayList !== ''){
+	    			this.datas = storeRepayList;
+	    		}
 	    	}else{
+	    		//获取store中保存的json(指定id的还款列表)
+	    		var repayGroupData = this.$store.state.borrowDetail[ this.$route.params.id ];
 	    		//判断缓存参数与当前接受参数是否一致
-	    		if(this.paramId !== this.$route.params.id) this.pageLogic();
+	    		if(this.paramId !== this.$route.params.id || repayGroupData === undefined){
+	    			this.pageLogic();
+	    		}else if(repayGroupData !== undefined){
+	    			this.data = repayGroupData;
+	    		}
 	    	}
 	    }
 	}

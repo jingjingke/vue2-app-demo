@@ -1,9 +1,11 @@
-#vue2-app-demo
+#vue2-app-demo[vuex分支]
 该项目与vuePro-demo练习项目相比大同小异，异的地方在于新增了vue-resource，在真实发送ajax的同时带入数据加密crypto-js，因为有加入公钥、私钥和appId的角色，为了安全，在项目中取消了公钥字符串，所以项目开发和发布都没办法在git中真实体验。接下来也只做目录结构与业务流程的说明。
 
 > 想要查看更多或者可移步至vuePro-demo项目，链接:[https://github.com/jingjingke/vuePro-demo](https://github.com/jingjingke/vuePro-demo)
 
 该项目仅取vuePro-demo中的个人中心模板进行优化，大致效果参照【[点击链接](https://jingjingke.github.io/vuePro-demo/dist/index.html#/user/)】。并在此基础上，新增了keep-alive、列表下拉刷新更多、退出登录以及页面切换delay等待效果。
+
+同时vuex分支除去localstorage缓存，改为vuex记录状态并保存数据（限制各6条json-使用前进后出）
 
 ##目录结构
 接下来只着重说明src文件夹的结构：
@@ -63,6 +65,9 @@
 │   │   ├── alertKnow.json            // 借款详情弹出(知识点)提示
 │   │   ├── bankId.json               // 银行Id对应样式式和名称
 │   │   └── helpDatas.json            // 帮助中心标题内容
+│   │
+│   ├── store                         // vuex相关[用文件夹方便后期vuex大了可以将各块分出来]
+│   │   └── index.js                  // vuex设置
 │   │
 │   ├── views                         // 业务页面
 │   │   ├── other                     // 其它

@@ -39,7 +39,7 @@ var ajax = {
 					}
 				}else{
 					//否则跳转到温馨提示登录过期页面
-					this.$router.push('/expired');
+					this.$router.push('/login');
 				}
 			}
 		)

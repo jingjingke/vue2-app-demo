@@ -51,11 +51,17 @@
 			this.sendAjax();
 	    },
 	    activated:function(){
-	    	if(this.appId !== this.appInfo.appId){
+	    	//获取store状态
+	    	var isupload = this.$store.state.userPages.repayRecord;
+	    	//判断是否需要更新
+	    	if(this.appId !== this.appInfo.appId || isupload === true){
 	    		//如果缓存Id与当前Id不一致则需要重新发送ajax
 	    		this.showDelay = true;
+	    		this.datas = [];
 	    		this.sendAjax();
+	    		this.$store.commit('uploadRecord',false);
 	    	}
+	    	
 	    }
 	}
 </script>

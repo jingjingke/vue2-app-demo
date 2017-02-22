@@ -47,7 +47,7 @@
 		    	},(rs)=>{
 		    		//成功后将私钥与appId替换现有的
 		    		this.getSecret(rs.data.appId,rs.data.appSecret);
-		    		localStorage.clear();
+//		    		localStorage.clear();
 		    		this.$router.push('/login');
 		    	},'plu')
 		    	//完成ajax
@@ -72,10 +72,13 @@
 	    	this.sendAjax();
 	    },
 	    activated:function(){
-	    	//如果被缓存的数据与当前需要数据不一致(判断appId区分)
-	    	if(this.appId !== this.appInfo.appId){
+	    	//如果被缓存的数据与当前需要数据不一致(判断appId区分)或者store中值显示true(更新)
+	    	var isupload = this.$store.state.userPages.index;
+	    	if(this.appId !== this.appInfo.appId || isupload === true){
 	    		this.showDelay = true;
 	    		this.sendAjax();
+	    		//还原store中记录的状态
+	    		this.$store.commit('uploadIndex',false);
 	    	}
 	    }
 	}

@@ -34,7 +34,7 @@
 	    data () {
 	        return {
 	        	data:{},
-	        	knowShow:false,
+	        	knowShow:false
 	        }
 	    },
 	    filters:{
@@ -76,21 +76,20 @@
 		    	//ajax完成
 	        },
 	        getData(){
-	        	//检查浏览器是否支持缓存,再决定从哪获取数据
-	        	if(!!window.localStorage){
-	        		this.data = JSON.parse(localStorage.getItem('borrowDetail'+this.$route.params.id));
+	        	//获取store中指定Id的json
+	        	var storeData = this.$store.state.borrowDetail[this.$route.params.id];
+	        	//判断store中是否有数据
+	        	if( storeData !== undefined){
+	        		this.data = storeData;
+	        		this.showDelay = false;
 	        	}else{
 	        		this.sendAjax();
 	        	}
 	        }
 	    },
-	    mounted:function(){
-	    	//数据提取[从缓存中]
-	    	this.getData();
-	    },
 	    activated:function(){
-	    	//判断被缓存的参数id与当前接收的参数id是否一致
-	    	if(this.id !== this.$route.params.id)	this.getData();
+	    	//调用数据
+	    	this.getData();
 	    }
 	}
 </script>
