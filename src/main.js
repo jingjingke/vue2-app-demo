@@ -1,7 +1,6 @@
-//引入vue + router + resource
+//引入vue + router
 import Vue from 'vue';
 import VueRouter from "vue-router";
-import VueResource from "vue-resource";
 
 import store from './store';
 
@@ -33,10 +32,7 @@ var app = new Vue({
 }).$mount('#app')
 
 
-//Vue使用resource插件
-Vue.use(VueResource);
-//启用emulateJSON选项[否则发送post-json可能会不成功]
-Vue.http.options.emulateJSON = true;
+
 //引入封装的ajax文件[方便处理登录过期等问题]
 import ajax from './config/ajax';
 //将ajax方法挂到全局
