@@ -1,5 +1,5 @@
 #vue2-app-demo
-该项目与vuePro-demo练习项目相比大同小异，异的地方在于新增了vue-resource，在真实发送ajax的同时带入数据加密crypto-js，因为有加入公钥、私钥和appId的角色，为了安全，在项目中取消了公钥字符串，所以项目开发和发布都没办法在git中真实体验。接下来也只做目录结构与业务流程的说明。
+该项目与vuePro-demo练习项目相比大同小异，异的地方在于新增了axios，在真实发送ajax的同时带入数据加密crypto-js，因为有加入公钥、私钥和appId的角色，为了安全，在项目中取消了公钥字符串，所以项目开发和发布都没办法在git中真实体验。接下来也只做目录结构与业务流程的说明。
 
 > 想要查看更多或者可移步至vuePro-demo项目，链接:[https://github.com/jingjingke/vuePro-demo](https://github.com/jingjingke/vuePro-demo)
 

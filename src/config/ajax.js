@@ -1,4 +1,6 @@
 import Vue from 'vue';
+import axios from 'axios';
+import qs from 'qs';
 
 //导入数据加密方法
 import secretJS from './secret';
@@ -21,12 +23,12 @@ var ajax = {
 		else if(secret === 'plu')	secret = secretJS.pluSecret;
 		
 		//发送ajax
-		this.$http.post(domain + url , secretJS.reData(data,secret)).then(
+		axios.post(domain + url , qs.stringify(secretJS.reData(data,secret))).then(
 			(response) => {
 				//先判断appId是否已经过期
-				if(response.body != 'appId not exist'){
+				if(response.data != 'appId not exist'){
 					//解密数据
-					var rs = JSON.parse(secretJS.backSecret(response.body,secret));
+					var rs = JSON.parse(secretJS.backSecret(response.data,secret));
 					//如果
 					if(rs.success == true)	sucFn(rs);
 					else{

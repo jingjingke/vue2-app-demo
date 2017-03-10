@@ -5,7 +5,7 @@ import ECB from 'crypto-js/mode-ecb';
 
 var secret = {
 	//公钥
-	pluSecret : '-',
+	pluSecret : '',
 	//加密的函数，传递key-value
 	getSecret : function(thisValue,thisKey){
 		var key = CryptoJS.enc.Utf8.parse(thisKey);
